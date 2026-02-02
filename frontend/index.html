@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>My Cinema - Admin</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>My Cinema — Admin</h1>
+    </header>
+    <main>
+        <section id="all-forms">
+
+            <div class="panel">
+                <h3>Films</h3>
+                <form id="movie-form" onsubmit="addMovie(event)" class="form-row">
+                    <input id="movie-title" placeholder="Titre" required>
+                    <input id="movie-duration" type="number" placeholder="Durée (min)" required>
+                    <input id="movie-year" type="number" placeholder="Année" min="1900" max="2100">
+                    <input id="movie-genre" placeholder="Genre">
+                    <input id="movie-director" placeholder="Réalisateur">
+                    <button type="submit">Ajouter</button>
+                </form>
+                <div id="movie-extra">
+                    <textarea id="movie-description" placeholder="Description" rows="3" style="width:100%;margin-top:8px;border-radius:6px;padding:8px;border:1px solid #eee"></textarea>
+                    <p id="movie-message" class="message"></p>
+                </div>
+                <div id="movies-list">Chargement...</div>
+            </div>
+            <hr>
+            <div class="panel">
+                <h3>Salles</h3>
+                <form id="room-form" onsubmit="addRoom(event)" class="form-row">
+                    <input id="room-name" placeholder="Nom" required>
+                    <input id="room-capacity" type="number" placeholder="Capacité" required>
+                    <select id="room-type">
+                        <option value="standard">Standard</option>
+                        <option value="3D">3D</option>
+                        <option value="IMAX">IMAX</option>
+                        <option value="dolby">Dolby</option>
+                    </select>
+                    <button type="submit">Ajouter</button>
+                </form>
+                <p id="room-message" class="message"></p>
+                <div id="rooms-list">Chargement...</div>
+            </div>
+            <hr>
+            <div class="panel">
+                <h3>Séances</h3>
+                <form id="screening-form" onsubmit="addScreening(event)" class="form-row">
+                    <select id="screening-movie" required></select>
+                    <select id="screening-room" required></select>
+                    <input id="screening-start" type="datetime-local" required>
+                    <button type="submit">Créer</button>
+                </form>
+                <p id="screening-message" class="message"></p>
+                <div id="screenings-list">Chargement...</div>
+            </div>
+        </section>
+    </main>
+    <script src="script.js"></script>
+</body>
+</html>
