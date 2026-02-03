@@ -1,6 +1,5 @@
 <?php
 // backend/index.php - Point d'entrée unique de l'API
-
 // ===== HEADERS CORS & JSON =====
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json; charset=UTF-8");
@@ -48,7 +47,6 @@ switch ($route) {
             $controller->deleteMovie();
         }
         break;
-
     case 'rooms':
         $controller = new RoomController($db);
         if ($method === 'GET') {
@@ -62,7 +60,6 @@ switch ($route) {
             $controller->deleteRoom();
         }
         break;
-
     case 'screenings':
         $controller = new ScreeningController($db);
         if ($method === 'GET') {
@@ -76,7 +73,6 @@ switch ($route) {
             $controller->deleteScreening();
         }
         break;
-
     default:
         http_response_code(404);
         echo json_encode(["message" => "Route non trouvée. Utilisez ?route=movies, rooms, ou screenings"]);

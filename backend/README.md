@@ -1,35 +1,35 @@
-# My Cinema — backend
+# My Cinema — Backend (simple)
 
-Quick notes to get the backend running locally and to apply the DB schema.
+Petit guide pour lancer l'API backend en local.
 
-Run the PHP server (from project root):
+1) Configurer la base de données
+- Ouvrez `backend/config/database.php` et mettez vos paramètres MySQL (host, user, password, dbname).
 
-```bash
-php -S localhost:8000 -t backend/
-```
-
-Database setup
-1. Edit `backend/config/database.php` and set your MySQL credentials (host, user, password).
-2. Run the migration SQL file to create the database and tables:
-
-```bash
-# run from project root
-mysql -u <user> -p < backend/migrations/0001_create_schema.sql
-```
-
-Example (typical local environments):
+2) Importer le schéma
+Exécutez depuis la racine du projet :
 
 ```bash
 mysql -u root -p < backend/migrations/0001_create_schema.sql
 ```
 
-If your MySQL user requires a password, you will be prompted. After the migration you can test the API:
+3) Lancer le serveur PHP (dev)
+
+```bash
+php -S localhost:8000 -t backend/
+```
+
+4) Tester une route
 
 ```bash
 curl "http://localhost:8000/index.php?route=movies"
 ```
 
-Notes and next steps
-- The migration creates `movies`, `rooms`, and `screenings`. `movies` and `rooms` include an `active` flag for soft deletes.
-- `screenings` stores `start_time` and `end_time` (used to check overlaps). Business rules (no overlapping screenings in same room) should be enforced in a `ScreeningService` when creating/updating screenings.
-- If you want, I can now implement: paginated movies list, create/update/delete for movies, or the `ScreeningService` overlap check.
+Infos rapides
+- Point d'entrée de l'API : `backend/index.php` (paramètre `?route=` : `movies`, `rooms`, `screenings`).
+- Les tables créées : `movies`, `rooms`, `screenings`.
+- `movies` et `rooms` utilisent une colonne `active` pour les suppressions soft.
+- `screenings` a `start_time` et `end_time` : le backend vérifie les conflits d'horaire (pas de séances qui se chevauchent dans la même salle).
+
+Si vous voulez, je peux :
+- Exécuter des tests rapides (GET/POST/PUT/DELETE) sur l'API.
+- Simplifier ou documenter d'autres parties du projet.

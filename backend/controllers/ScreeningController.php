@@ -27,7 +27,6 @@ class ScreeningController {
             echo json_encode(["message" => "ID manquant ou invalide."]);
             return;
         }
-
         $screening = $this->repository->findById($id);
         header('Content-Type: application/json');
         if ($screening) {
@@ -39,7 +38,6 @@ class ScreeningController {
     }
     public function createScreening() {
         $data = json_decode(file_get_contents("php://input"));
-
         // Validation minimale : accepter start_time et calculer end_time depuis la durée du film
         if (empty($data->movie_id) || empty($data->room_id) || empty($data->start_time)) {
             http_response_code(400);
@@ -50,7 +48,6 @@ class ScreeningController {
         $movieId = $data->movie_id;
         $roomId = $data->room_id;
         $startTime = $data->start_time;
-
         // Récupérer la durée du film pour calculer end_time
         $movieRepo = new MovieRepository($this->db);
         $movie = $movieRepo->findById($movieId);
@@ -60,12 +57,10 @@ class ScreeningController {
             echo json_encode(["message" => "Film introuvable."]);
             return;
         }
-
         $duration = (int)($movie->duration ?? 0);
         $dt = new DateTime($startTime);
         $dt->add(new DateInterval('PT' . max(0, $duration) . 'M'));
         $endTime = $dt->format('Y-m-d H:i:s');
-
         // Vérification conflit via le Service
         if (!$this->service->isSlotAvailable($roomId, $startTime, $endTime)) {
             http_response_code(409);
@@ -73,7 +68,6 @@ class ScreeningController {
             echo json_encode(["message" => "Conflit : Salle déjà occupée à cet horaire !"]);
             return;
         }
-
         // Création via le Repository
         if ($this->repository->create($movieId, $roomId, $startTime, $endTime)) {
             header('Content-Type: application/json');
@@ -84,19 +78,16 @@ class ScreeningController {
             echo json_encode(["message" => "Erreur lors de la création de la séance."]);
         }
     }
-
     public function updateScreening() {
         $id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
         $data = json_decode(file_get_contents('php://input'), true);
-
         if ($id <= 0 || empty($data) || !is_array($data)) {
             http_response_code(400);
             header('Content-Type: application/json');
             echo json_encode(["message" => "ID manquant ou données invalides."]);
             return;
         }
-
-        // Si on change les horaires (ou movie), vérifier absence de conflit (en excluant la séance actuelle)
+        // Si on change les horaires (ou movie), vérifier absence de conflit
         $existing = $this->repository->findById($id);
         if (!$existing) {
             http_response_code(404);
@@ -104,8 +95,7 @@ class ScreeningController {
             echo json_encode(["message" => "Séance non trouvée."]);
             return;
         }
-
-        // Si start_time est fourni mais pas end_time, calculer end_time depuis la durée (movie_id prioritaire dans payload sinon existant)
+        // Si start_time est fourni mais pas end_time, calculer end_time depuis la durée
         if (isset($data['start_time']) && !isset($data['end_time'])) {
             $movieIdForDuration = $data['movie_id'] ?? $existing->movie_id;
             $movieRepo = new MovieRepository($this->db);
@@ -115,7 +105,6 @@ class ScreeningController {
             $dt->add(new DateInterval('PT' . max(0, $duration) . 'M'));
             $data['end_time'] = $dt->format('Y-m-d H:i:s');
         }
-
         if (isset($data['start_time']) && isset($data['end_time'])) {
             $roomIdForCheck = $data['room_id'] ?? $existing->room_id;
             if (!$this->service->isSlotAvailableForUpdate($roomIdForCheck, $data['start_time'], $data['end_time'], $id)) {
@@ -125,7 +114,6 @@ class ScreeningController {
                 return;
             }
         }
-
         $ok = $this->repository->update($id, $data);
         header('Content-Type: application/json');
         if ($ok) {
@@ -135,7 +123,6 @@ class ScreeningController {
             echo json_encode(["message" => "Impossible de mettre à jour la séance ou rien à changer."]);
         }
     }
-
     public function deleteScreening() {
         $id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
         header('Content-Type: application/json');

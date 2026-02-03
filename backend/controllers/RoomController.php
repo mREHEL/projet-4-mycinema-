@@ -10,7 +10,6 @@ class RoomController {
         $page = isset($_GET['page']) ? max(1, (int)$_GET['page']) : 1;
         $perPage = isset($_GET['per_page']) ? max(1, (int)$_GET['per_page']) : 10;
         $offset = ($page - 1) * $perPage;
-
         $rooms = $this->repository->getPaginated($perPage, $offset);
         header('Content-Type: application/json');
         echo json_encode($rooms);
@@ -57,7 +56,6 @@ class RoomController {
             echo json_encode(["message" => "ID manquant ou données invalides."]);
             return;
         }
-
         $ok = $this->repository->update($id, $data);
         header('Content-Type: application/json');
         if ($ok) {
@@ -67,7 +65,6 @@ class RoomController {
             echo json_encode(["message" => "Impossible de mettre à jour la salle ou rien à changer."]);
         }
     }
-
     public function deleteRoom() {
         $id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
         header('Content-Type: application/json');

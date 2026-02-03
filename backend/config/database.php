@@ -2,10 +2,9 @@
 class Database {
     private $host = "localhost";
     private $db_name = "my_cinema";
-    private $username = "root";
+    private $username = "root"; // mysql> CREATE USER 'cinema_user'@'localhost IDENTIFIED BY 'incroyable';
     private $password = "incroyable";
     public $conn;
-
     public function getConnection() {
         $this->conn = null;
         try {

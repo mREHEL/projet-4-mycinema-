@@ -20,7 +20,7 @@ header{
   align-items:center;
   box-shadow: 0 2px 8px rgba(34,41,47,0.06);
 }
-header h1{
+header,h1{
     font-size:18px;
     margin:0;
     font-weight:600
@@ -39,9 +39,17 @@ main{
   padding:14px;
   margin-bottom:18px;
 }
-.panel h3{margin:0 0 10px 0;font-size:16px}
+.panel h3{
+    margin:0 0 10px 0;
+    font-size:16px;
+}
 
-.form-row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.form-row{
+    display:flex;
+    gap:8px;
+    align-items:center;
+    flex-wrap:wrap
+}
 .form-row input[type="text"],
 .form-row input[type="number"],
 .form-row input[type="datetime-local"],
@@ -95,7 +103,9 @@ button:hover{
   .form-row{flex-direction:column;align-items:stretch}
   .form-row input[type="number"], .form-row select{width:100%}
 }
-
-.muted{color:#6b6f76}
-
-footer{height:36px}
+.muted{
+    color:#6b6f76
+}
+footer{
+    height:36px
+}
