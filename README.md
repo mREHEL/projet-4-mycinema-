@@ -1,17 +1,8 @@
-# 🎬 My Cinema - Gestion Administrative
+# My Cinema - Gestion Administrative
 
 Un back-office complet pour gérer les films, salles et séances d'un cinéma. Architecture MVC en PHP pur (sans framework), avec API REST et interface d'administration.
 
-## 📋 Table des matières
-
-- [Installation](#installation)
-- [Configuration](#configuration)
-- [Lancement](#lancement)
-- [Architecture](#architecture)
-- [API Documentation](#api-documentation)
-- [Fonctionnalités](#fonctionnalités)
-
-## 🚀 Installation
+##  Installation
 
 ### Prérequis
 

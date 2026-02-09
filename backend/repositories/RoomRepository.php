@@ -62,7 +62,6 @@ class RoomRepository {
         $stmt->bindParam(':id', $id, PDO::PARAM_INT);
         return $stmt->execute();
     }
-
     /*** Vérifier si une salle a des séances */
     public function hasScreenings($roomId) {
         $sql = "SELECT COUNT(*) FROM screenings WHERE room_id = :id";
